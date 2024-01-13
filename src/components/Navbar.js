@@ -5,7 +5,6 @@ import useLogout from '../hooks/useLogout';
 
 const Navbar = () => {
   const { auth } = useAuth();
-  console.log('this is auth', auth);
   const logout = useLogout();
   const navigate = useNavigate();
 

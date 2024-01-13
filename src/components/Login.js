@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import TextFieldGroup from './TextFieldGroup';
-import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
+import axios from '../api/axios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,11 +30,9 @@ const Login = () => {
         password: password,
       };
 
-      const response = await axios.post(
-        'http://localhost:5000/api/v1/auth/login',
-        data
-      );
-      console.log(response.data);
+      const response = await axios.post('/api/v1/auth/login', data, {
+        withCredentials: true,
+      });
       setAuth({
         email: response.data.data.email,
         role: response.data.data.role,
