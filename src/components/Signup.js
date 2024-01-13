@@ -5,10 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EMAIL_REGEX } from '../constants';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
-function CreateCitizen() {
+function SignUp() {
   const axios = useAxiosPrivate();
   const [email, setEmail] = useState('');
   const [validEmail, setValidEmail] = useState(false);
+  const [username, setUsername] = useState('');
 
   const [password, setPassword] = useState('');
 
@@ -17,7 +18,7 @@ function CreateCitizen() {
   const [defaultLocation, setDefaultLocation] = useState('');
 
   const [status, setStatus] = useState();
-  const [error, setError] = useState();
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -35,7 +36,8 @@ function CreateCitizen() {
       await axios.post('/api/v1/user/signup', {
         email,
         password,
-        name: name,
+        name,
+        username,
       });
 
       setStatus('Successfully created your account');
@@ -45,7 +47,11 @@ function CreateCitizen() {
     } catch (registerUserError) {
       setStatus('');
       if (registerUserError.response) {
-        setError(registerUserError.response.data.error);
+        if (registerUserError.response.data.message) {
+          setError(registerUserError.response.data.message);
+        } else {
+          setError(registerUserError.response.data.error);
+        }
       } else {
         setError('something went wrong');
       }
@@ -56,6 +62,7 @@ function CreateCitizen() {
     <div className='container mt-5'>
       <h1 className='text-center mb-4'> Sign up</h1>
       {status && <p className='text-success'>{status}</p>}
+      {error && <p className='text-danger'>{error}</p>}
       <form onSubmit={registerUser} className='col-md-6 col-12 mx-auto'>
         <div>
           <label htmlFor='email' className='form-label'>
@@ -112,6 +119,22 @@ function CreateCitizen() {
           />
         </div>
 
+        <div>
+          <label htmlFor='first-name'>Username:</label>
+        </div>
+        <div className='mb-3'>
+          <input
+            className='input'
+            placeholder='Enter name'
+            type='text'
+            id='first-name'
+            name='first-name'
+            onChange={e => setUsername(e.target.value)}
+            value={username}
+            // required
+          />
+        </div>
+
         <hr />
         <button
           // disable={!validEmail || !validPassword || !isMatch ? true : false}
@@ -124,4 +147,4 @@ function CreateCitizen() {
   );
 }
 
-export default CreateCitizen;
+export default SignUp;
