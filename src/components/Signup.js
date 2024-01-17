@@ -15,6 +15,8 @@ function SignUp() {
 
   const [name, setFirstName] = useState();
 
+  const [isTrainer, setIsTrainer] = useState(false);
+  const [trainerType, setTrainerType] = useState(false);
   const [defaultLocation, setDefaultLocation] = useState('');
 
   const [status, setStatus] = useState();
@@ -38,6 +40,8 @@ function SignUp() {
         password,
         name,
         username,
+        isTrainer,
+        trainerType,
       });
 
       setStatus('Successfully created your account');
@@ -56,6 +60,10 @@ function SignUp() {
         setError('something went wrong');
       }
     }
+  };
+
+  const handleCheckboxChange = () => {
+    setIsTrainer(!isTrainer); // You can choose to update isTrainer state directly here or in the submit function
   };
 
   return (
@@ -134,6 +142,37 @@ function SignUp() {
             // required
           />
         </div>
+        <div className='mb-3 form-check'>
+          <input
+            type='checkbox'
+            className='form-check-input'
+            id='isTrainerCheckbox'
+            checked={isTrainer}
+            onChange={handleCheckboxChange}
+          />
+          <label className='form-check-label' htmlFor='isTrainerCheckbox'>
+            Are you a trainer?
+          </label>
+        </div>
+
+        {isTrainer && (
+          <div className='mb-3'>
+            <label htmlFor='trainerType' className='mx-3'>
+              Trainer Type:
+            </label>
+            <select
+              className='form-select'
+              id='trainerType'
+              value={trainerType}
+              onChange={e => setTrainerType(e.target.value)}
+            >
+              <option value=''>Select Trainer Type</option>
+              <option value='Boxing'>Boxing</option>
+              <option value='PT'>PT (Personal Trainer)</option>
+              <option value='Physio'>Physio</option>
+            </select>
+          </div>
+        )}
 
         <hr />
         <button
