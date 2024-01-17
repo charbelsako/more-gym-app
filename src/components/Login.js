@@ -9,6 +9,7 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
   const [errors, setErrors] = useState({});
+  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setAuth } = useAuth();
@@ -41,7 +42,11 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.log(err);
-      // setErrors(err.response.errors);
+      if (err.response.data.errors) {
+        setErrors(err.response.data.errors);
+      } else {
+        setError(err.response.data);
+      }
     }
   };
 
@@ -50,6 +55,7 @@ const Login = () => {
       <div className='row'>
         <div className='col-md-8 m-auto'>
           <h1 className='display-4 text-center'>Log In</h1>
+          {error && <p className='text-danger'>{error}</p>}
 
           <form onSubmit={onSubmit}>
             <TextFieldGroup

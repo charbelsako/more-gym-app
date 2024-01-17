@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Home from './components/Home';
 import Signup from './components/Signup';
-// import ResetPassword from './components/ResetPassword';
+import ResetPassword from './components/ResetPassword';
 import Profile from './components/Profile';
 import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
@@ -32,7 +32,7 @@ function App() {
               {/* This will be the dashboard of all roles */}
               <Route path='/' element={<Home />} />
               <Route path='profile' element={<Profile />} />
-              {/* <Route path='/user/change-password' element={<ChangePassword />} /> */}
+              <Route path='/user/reset-password' element={<ResetPassword />} />
             </Route>
           </Route>
         </Route>

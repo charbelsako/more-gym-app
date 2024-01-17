@@ -16,7 +16,7 @@ const Navbar = () => {
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <div className='container'>
         <Link to='/' className='navbar-brand'>
-          Your App Name
+          MORE gym
         </Link>
         <button
           className='navbar-toggler'
@@ -47,7 +47,7 @@ const Navbar = () => {
                 ) : null}
                 {auth.role === 'admin' ? (
                   <li>
-                    <Link to='/foehfo' className='nav-link'>
+                    <Link to='/user/reset-password' className='nav-link'>
                       Reset pass
                     </Link>
                   </li>
@@ -61,7 +61,7 @@ const Navbar = () => {
                 <li>
                   <button
                     onClick={signOut}
-                    className='nav-link btn btn-outline-danger'
+                    className='nav-link btn btn-outline-danger d-inline p-1 m-1'
                   >
                     Logout
                   </button>
