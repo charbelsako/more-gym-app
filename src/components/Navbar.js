@@ -39,11 +39,18 @@ const Navbar = () => {
                   </Link>
                 </li>
                 {auth.role === 'customer' ? (
-                  <li>
-                    <Link to='/documents/my' className='nav-link'>
-                      My Documents
-                    </Link>
-                  </li>
+                  <>
+                    <li>
+                      <Link to='/appointments/book' className='nav-link'>
+                        Book Appointment
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to='/appointments/my' className='nav-link'>
+                        My Appointments
+                      </Link>
+                    </li>
+                  </>
                 ) : null}
                 {auth.role === 'admin' ? (
                   <li>
