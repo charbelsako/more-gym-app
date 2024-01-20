@@ -16,7 +16,7 @@ function SignUp() {
   const [name, setFirstName] = useState();
 
   const [isTrainer, setIsTrainer] = useState(false);
-  const [trainerType, setTrainerType] = useState(false);
+  const [trainerType, setTrainerType] = useState(undefined);
   const [defaultLocation, setDefaultLocation] = useState('');
 
   const [status, setStatus] = useState();
