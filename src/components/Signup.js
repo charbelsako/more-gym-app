@@ -4,6 +4,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EMAIL_REGEX } from '../constants';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import TextFieldGroup from './TextFieldGroup';
 
 function SignUp() {
   const axios = useAxiosPrivate();
@@ -12,12 +13,10 @@ function SignUp() {
   const [username, setUsername] = useState('');
 
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [validPass, setValidPass] = useState(undefined);
 
   const [name, setFirstName] = useState();
-
-  const [isTrainer, setIsTrainer] = useState(false);
-  const [trainerType, setTrainerType] = useState(undefined);
-  const [defaultLocation, setDefaultLocation] = useState('');
 
   const [status, setStatus] = useState();
   const [error, setError] = useState('');
@@ -25,6 +24,14 @@ function SignUp() {
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
+
+  useEffect(() => {
+    if (password === confirmPassword) {
+      setValidPass(true);
+    } else {
+      setValidPass(false);
+    }
+  }, [password, confirmPassword]);
 
   const registerUser = async e => {
     try {
@@ -34,14 +41,16 @@ function SignUp() {
         setError('Invalid Entry');
         return;
       }
+      if (!validPass) {
+        setError('Passwords do not match');
+        return;
+      }
 
       await axios.post('/api/v1/user/signup', {
         email,
         password,
         name,
         username,
-        isTrainer,
-        trainerType,
       });
 
       setStatus('Successfully created your account');
@@ -54,17 +63,17 @@ function SignUp() {
         if (registerUserError.response.data.message) {
           setError(registerUserError.response.data.message);
         } else {
-          setError(registerUserError.response.data.error);
+          setError(Object.values(registerUserError.response.data)[0]);
         }
       } else {
-        setError('something went wrong');
+        setError('Something went wrong');
       }
     }
   };
 
-  const handleCheckboxChange = () => {
-    setIsTrainer(!isTrainer); // You can choose to update isTrainer state directly here or in the submit function
-  };
+  // const handleCheckboxChange = () => {
+  //   setIsTrainer(!isTrainer); // You can choose to update isTrainer state directly here or in the submit function
+  // };
 
   return (
     <div className='container mt-5'>
@@ -74,7 +83,7 @@ function SignUp() {
       <form onSubmit={registerUser} className='col-md-6 col-12 mx-auto'>
         <div>
           <label htmlFor='email' className='form-label'>
-            Email:
+            Email:{' '}
             <FontAwesomeIcon
               icon={faCheck}
               className={validEmail ? 'visible' : 'd-none'}
@@ -86,7 +95,7 @@ function SignUp() {
           </label>
         </div>
         <div className='mb-3'>
-          <input
+          <TextFieldGroup
             type='text'
             name='email'
             className='input'
@@ -97,10 +106,10 @@ function SignUp() {
           />
         </div>
         <div>
-          <label htmlFor='password'>Password:</label>
+          <label htmlFor='password'>Password*:</label>
         </div>
         <div className='mb-3'>
-          <input
+          <TextFieldGroup
             type='password'
             className='input'
             placeholder='Enter a password'
@@ -112,10 +121,30 @@ function SignUp() {
         </div>
 
         <div>
-          <label htmlFor='first-name'>Name:</label>
+          <label htmlFor='password'>Confirm Password*:</label>
         </div>
         <div className='mb-3'>
-          <input
+          <TextFieldGroup
+            type='password'
+            className='input'
+            placeholder='Confirm your password'
+            name='confirm-password'
+            id='confirm-password'
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          {!validPass ? (
+            <p className='text-danger'>Passwords do not match</p>
+          ) : null}
+          {validPass ? <p className='text-success'>Passwords match</p> : null}
+        </div>
+        <div>
+          <label htmlFor='first-name'>Name*:</label>
+        </div>
+        <div className='mb-3'>
+          <TextFieldGroup
             className='input'
             placeholder='Enter name'
             type='text'
@@ -123,63 +152,30 @@ function SignUp() {
             name='first-name'
             onChange={e => setFirstName(e.target.value)}
             value={name}
-            // required
           />
         </div>
 
         <div>
-          <label htmlFor='first-name'>Username:</label>
+          <label htmlFor='first-name'>Username*:</label>
         </div>
         <div className='mb-3'>
-          <input
+          <TextFieldGroup
             className='input'
-            placeholder='Enter name'
+            placeholder='Enter username'
             type='text'
             id='first-name'
             name='first-name'
             onChange={e => setUsername(e.target.value)}
             value={username}
-            // required
           />
         </div>
-        <div className='mb-3 form-check'>
-          <input
-            type='checkbox'
-            className='form-check-input'
-            id='isTrainerCheckbox'
-            checked={isTrainer}
-            onChange={handleCheckboxChange}
-          />
-          <label className='form-check-label' htmlFor='isTrainerCheckbox'>
-            Are you a trainer?
-          </label>
-        </div>
-
-        {isTrainer && (
-          <div className='mb-3'>
-            <label htmlFor='trainerType' className='mx-3'>
-              Trainer Type:
-            </label>
-            <select
-              className='form-select'
-              id='trainerType'
-              value={trainerType}
-              onChange={e => setTrainerType(e.target.value)}
-            >
-              <option value=''>Select Trainer Type</option>
-              <option value='Boxing'>Boxing</option>
-              <option value='PT'>PT (Personal Trainer)</option>
-              <option value='Physio'>Physio</option>
-            </select>
-          </div>
-        )}
 
         <hr />
         <button
-          // disable={!validEmail || !validPassword || !isMatch ? true : false}
+          disabled={!validEmail || !validPass ? true : false}
           className='btn btn-primary'
         >
-          Create Citizen
+          Create User
         </button>
       </form>
     </div>
