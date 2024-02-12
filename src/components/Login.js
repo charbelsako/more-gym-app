@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import TextFieldGroup from './TextFieldGroup';
 import useAuth from '../hooks/useAuth';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
   const [errors, setErrors] = useState({});
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -39,7 +37,7 @@ const Login = () => {
         role: response.data.data.role,
         token: response.data.data.accessToken,
       });
-      navigate(from, { replace: true });
+      navigate('/choose-location', { replace: true });
     } catch (err) {
       console.log(err);
       if (err.response.data.errors) {

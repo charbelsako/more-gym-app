@@ -56,6 +56,7 @@ function SignUp() {
       setStatus('Successfully created your account');
       setEmail('');
       setPassword('');
+      setConfirmPassword('');
       setError('');
     } catch (registerUserError) {
       setStatus('');

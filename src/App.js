@@ -9,6 +9,7 @@ import RequireAuth from './components/RequireAuth';
 import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import BookAppointment from './components/BookAppointment';
+import ChooseLocation from './components/ChooseLocation';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             </Route>
             <Route element={<RequireAuth allowedRoles={['customer']} />}>
               <Route path='/appointments/book' element={<BookAppointment />} />
+              <Route path='/choose-location' element={<ChooseLocation />} />
               {/* <Route path='/appointments/my' element={<MyAppointment />} /> */}
             </Route>
           </Route>
