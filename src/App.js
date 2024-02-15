@@ -10,6 +10,9 @@ import Layout from './components/Layout';
 import PersistLogin from './components/PersistLogin';
 import BookAppointment from './components/BookAppointment';
 import ChooseLocation from './components/ChooseLocation';
+import AddSessionType from './components/AddSessionType';
+import AddPackageType from './components/AddPackageType';
+import AddMembership from './components/AddMembership';
 
 function App() {
   return (
@@ -26,6 +29,20 @@ function App() {
             }
           ></Route>
           <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth allowedRoles={['admin']} />}>
+              <Route
+                path='/admin/create-session-type'
+                element={<AddSessionType />}
+              />
+              <Route
+                path='/admin/create-package-type'
+                element={<AddPackageType />}
+              />
+              <Route
+                path='/admin/create-membership'
+                element={<AddMembership />}
+              />
+            </Route>
             <Route
               element={
                 <RequireAuth allowedRoles={['customer', 'admin', 'trainer']} />
@@ -36,7 +53,9 @@ function App() {
               <Route path='profile' element={<Profile />} />
               <Route path='/user/reset-password' element={<ResetPassword />} />
             </Route>
-            <Route element={<RequireAuth allowedRoles={['customer']} />}>
+            <Route
+              element={<RequireAuth allowedRoles={['customer', 'admin']} />}
+            >
               <Route path='/appointments/book' element={<BookAppointment />} />
               <Route path='/choose-location' element={<ChooseLocation />} />
               {/* <Route path='/appointments/my' element={<MyAppointment />} /> */}
