@@ -5,6 +5,7 @@ const AddMembership = () => {
   const axios = useAxiosPrivate();
   const [packageTypes, setPackageTypes] = useState([]);
   const [sessionTypes, setSessionTypes] = useState([]);
+  const [selectedPackageSubType, setSelectedPackageSubType] = useState('');
   const [selectedSessionType, setSelectedSessionType] = useState('');
   const [selectedPackageType, setSelectedPackageType] = useState('');
   const [price, setPrice] = useState('');
@@ -14,6 +15,10 @@ const AddMembership = () => {
 
   const handleSessionTypeChange = e => {
     setSelectedSessionType(e.target.value);
+  };
+
+  const handlePackageSubTypeChange = e => {
+    setSelectedPackageSubType(e.target.value);
   };
 
   const handlePackageTypeChange = e => {
@@ -36,8 +41,9 @@ const AddMembership = () => {
 
       // Make API request to create membership
       const response = await axios.post('/api/v1/admin/create-membership', {
-        sessionType: selectedSessionType,
+        subType: selectedPackageSubType,
         type: selectedPackageType,
+        sessionType: selectedSessionType,
         price: parseFloat(price.trim()), // Assuming price is a numeric value
       });
 
@@ -62,7 +68,7 @@ const AddMembership = () => {
 
   useEffect(() => {
     const getSessionTypes = async () => {
-      const response = await axios.get('/api/v1/admin/get-session-types');
+      const response = await axios.get('/api/v1/admin/get-package-subtypes');
       setSessionTypes(response.data);
     };
     getSessionTypes();
@@ -84,13 +90,33 @@ const AddMembership = () => {
       <form onSubmit={handleCreateMembership}>
         <div className='mb-3'>
           <label htmlFor='sessionType' className='form-label'>
-            Session Number:
+            Session Type:
           </label>{' '}
           <select
             id='sessionType'
             className='form-select'
             value={selectedSessionType}
             onChange={handleSessionTypeChange}
+            required
+          >
+            <option value='' disabled>
+              Select Session Type
+            </option>
+            <option value='PT'>PT</option>
+            <option value='Pilates'>Pilates</option>
+            <option value='Physio'>Physio</option>
+            <option value='Boxing'>Boxing</option>
+          </select>
+        </div>
+        <div className='mb-3'>
+          <label htmlFor='sessionType' className='form-label'>
+            Session Number:
+          </label>{' '}
+          <select
+            id='sessionType'
+            className='form-select'
+            value={selectedPackageSubType}
+            onChange={handlePackageSubTypeChange}
             required
           >
             <option value='' disabled>
@@ -145,14 +171,13 @@ const AddMembership = () => {
       <div className='mt-5'>
         <h2>Memberships available</h2>
         {memberships.map(membership => (
-          <div className='card'>
+          <div className='card m-4'>
             {/* <div className='card-body'>{membership.type}</div> */}
             <div className='card-body'>
               <p>Package type: {membership.type.type} </p>
-              <p>
-                Number of Sessions: {membership.sessionType.numberOfSessions}
-              </p>
-              <p>{membership.price}$</p>
+              <p>Number of Sessions: {membership.subType.numberOfSessions}</p>
+              <p>Session Type: {membership.sessionType}</p>
+              <p>Price {membership.price}$</p>
             </div>
           </div>
         ))}

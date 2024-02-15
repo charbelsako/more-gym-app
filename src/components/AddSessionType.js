@@ -10,7 +10,7 @@ const AddSessionType = () => {
 
   useEffect(() => {
     const getSessionTypes = async () => {
-      const response = await axios.get('/api/v1/admin/get-session-types');
+      const response = await axios.get('/api/v1/admin/get-package-subtypes');
       setSessionTypes(response.data);
     };
     getSessionTypes();
@@ -29,9 +29,12 @@ const AddSessionType = () => {
         return;
       }
 
-      const response = await axios.post('/api/v1/admin/create-session-type', {
-        sessionNumber: sessionType.trim(),
-      });
+      const response = await axios.post(
+        '/api/v1/admin/create-package-subtype',
+        {
+          sessionNumber: sessionType.trim(),
+        }
+      );
 
       // Handle successful response
       console.log('Session type added:', response.data);
