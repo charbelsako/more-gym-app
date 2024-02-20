@@ -8,6 +8,7 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
+  const [membershipHistory, setMembershipHistory] = useState([]);
 
   const axios = useAxiosPrivate();
   useEffect(() => {
@@ -24,6 +25,14 @@ const Profile = () => {
 
     fetchData();
   }, [axios]); // The empty dependency array ensures that useEffect runs only once after the initial render
+
+  useEffect(() => {
+    const getHistory = async () => {
+      const response = await axios.get('/api/v1/user/history');
+      setMembershipHistory(response.data);
+    };
+    getHistory();
+  }, [axios]);
 
   const updateProfile = async e => {
     try {
@@ -66,6 +75,22 @@ const Profile = () => {
           <p>
             Membership end date:{' '}
             {moment(userData.membershipEndDate).format('YYYY MMMM DD')}
+          </p>
+          <p>Total Sessions taken: {userData.totalSessions || 0}</p>
+          <p>
+            <h3>Membership History:</h3>
+            {membershipHistory.length === 0 && <p>No data</p>}
+            {membershipHistory.map(history => (
+              <>
+                <div className='card w-50 mx-auto m-3'>
+                  <div className='card-body'>
+                    Type: {history.membership.type.type} -{' '}
+                    {history.membership.subType.numberOfSessions} sessions -{' '}
+                    {history.membership.price}$
+                  </div>
+                </div>
+              </>
+            ))}
           </p>
           <p className='m-5 h4'>Role: {userData.role}</p>
           {/* Add other user profile data fields as needed */}
