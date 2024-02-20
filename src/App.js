@@ -13,6 +13,7 @@ import ChooseLocation from './components/ChooseLocation';
 import AddSessionType from './components/AddSessionType';
 import AddPackageType from './components/AddPackageType';
 import AddMembership from './components/AddMembership';
+import UsersList from './components/UsersList';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
                 path='/admin/create-membership'
                 element={<AddMembership />}
               />
+              <Route path='/admin/users-list' element={<UsersList />} />
             </Route>
             <Route
               element={
