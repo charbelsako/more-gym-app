@@ -77,6 +77,7 @@ const Profile = () => {
             {moment(userData.membershipEndDate).format('YYYY MMMM DD')}
           </p>
           <p>Total Sessions taken: {userData.totalSessions || 0}</p>
+          <p>Remaining Sessions: {userData.numberOfSessions} </p>
           <p>
             <h3>Membership History:</h3>
             {membershipHistory.length === 0 && <p>No data</p>}
