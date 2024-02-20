@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import moment from 'moment';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -58,6 +59,14 @@ const Profile = () => {
           <button onClick={updateProfile} className='btn btn-primary'>
             Update
           </button>
+          <p>
+            Membership type: {userData.membership.type.type} -{' '}
+            {userData.membership.subType.numberOfSessions} Sessions
+          </p>
+          <p>
+            Membership end date:{' '}
+            {moment(userData.membershipEndDate).format('YYYY MMMM DD')}
+          </p>
           <p className='m-5 h4'>Role: {userData.role}</p>
           {/* Add other user profile data fields as needed */}
         </div>
