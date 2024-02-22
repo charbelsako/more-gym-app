@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
+import useAuth from '../hooks/useAuth';
 
 const BookAppointment = () => {
+  const { location } = useAuth();
   const axios = useAxiosPrivate();
   const [date, setDate] = useState('');
   const [trainerType, setTrainerType] = useState('');
@@ -63,6 +65,7 @@ const BookAppointment = () => {
         time,
         date,
         trainerId,
+        location,
       });
       setStatus('Successfully booked an appointment');
       setError('');
