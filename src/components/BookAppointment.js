@@ -29,7 +29,7 @@ const BookAppointment = () => {
       setLoading(true);
 
       const response = await axios.get(
-        `/api/v1/trainer/get-availability?date=${date}&type=${trainerType}`
+        `/api/v1/trainer/get-availability?date=${date}&type=${trainerType}&location=${location}`
       );
 
       let unwindedData = response.data.data.map(
@@ -113,6 +113,10 @@ const BookAppointment = () => {
             <option value='Physio'>Physio</option>
             <option value='Pilates'>Pilates</option>
           </select>
+        </div>
+        <div>
+          <label htmlFor='location'>Location: </label>
+          <p>{location}</p>
         </div>
         <button type='submit'>Submit</button>
       </form>
