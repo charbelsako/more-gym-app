@@ -14,6 +14,7 @@ import AddSessionType from './components/AddSessionType';
 import AddPackageType from './components/AddPackageType';
 import AddMembership from './components/AddMembership';
 import UsersList from './components/UsersList';
+import MyAppointments from './components/MyAppointments';
 
 function App() {
   return (
@@ -60,7 +61,7 @@ function App() {
             >
               <Route path='/appointments/book' element={<BookAppointment />} />
               <Route path='/choose-location' element={<ChooseLocation />} />
-              {/* <Route path='/appointments/my' element={<MyAppointment />} /> */}
+              <Route path='/appointments/my' element={<MyAppointments />} />
             </Route>
           </Route>
         </Route>
