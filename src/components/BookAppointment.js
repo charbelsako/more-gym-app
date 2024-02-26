@@ -32,9 +32,11 @@ const BookAppointment = () => {
         `/api/v1/trainer/get-availability?date=${date}&type=${trainerType}&location=${location}`
       );
 
+      let appointmentLocation = response.data.location;
       let unwindedData = response.data.data.map(
         ({ day, trainer, availableTimes, type, id }) =>
           Object.entries(availableTimes).map(([time, isAvailable]) => ({
+            location: appointmentLocation,
             day,
             trainer,
             availableTime: time,
@@ -135,6 +137,7 @@ const BookAppointment = () => {
                   <h5 className='card-title'>{type}</h5>
                   <p>Trainer name: {name}</p>
                   <p>Time: {moment({ hour: availableTime }).format('h a')}</p>
+                  <p>Location: {appointment.location}</p>
                 </div>
                 <div className='col-2 my-auto'>
                   <button
