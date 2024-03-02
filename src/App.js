@@ -15,6 +15,7 @@ import AddPackageType from './components/AddPackageType';
 import AddMembership from './components/AddMembership';
 import UsersList from './components/UsersList';
 import MyAppointments from './components/MyAppointments';
+import ShowMemberships from './components/ShowMemberships';
 
 function App() {
   return (
@@ -24,12 +25,13 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/memberships' element={<ShowMemberships />} />
           {/* Routes open to all */}
-          <Route
+          {/* <Route
             element={
               <RequireAuth allowedRoles={['customer', 'admin', 'trainer']} />
             }
-          ></Route>
+          ></Route> */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={['admin']} />}>
               <Route
