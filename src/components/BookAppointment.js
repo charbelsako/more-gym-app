@@ -2,11 +2,29 @@ import React, { useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
 import useAuth from '../hooks/useAuth';
+import { useGesture } from 'react-use-gesture';
+import { useSpring, animated } from 'react-spring';
 
 const BookAppointment = () => {
+  const [{ x }, set] = useSpring(() => ({ x: 0 }));
+
+  const bind = useGesture({
+    onDrag: ({ event, movement: [mx, my], delta: [dx, dy] }) => {
+      event.preventDefault();
+      const container = document.getElementById('days');
+      container.scrollLeft -= dx;
+      set({ x: dx });
+      // console.log('running');
+    },
+  });
+
   const { location } = useAuth();
   const axios = useAxiosPrivate();
-  const [date, setDate] = useState('');
+  const currentDay = moment().date();
+  const currentMonth = moment().format('MMMM');
+  const daysInMonth = moment().daysInMonth();
+  const daysLeft = daysInMonth - currentDay;
+  const [selectedDate, setSelectedDate] = useState();
   const [trainerType, setTrainerType] = useState('');
 
   const [appointments, setAppointments] = useState([]);
@@ -14,10 +32,6 @@ const BookAppointment = () => {
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
   const [isLoading, setLoading] = useState(false);
-
-  const handleDateChange = e => {
-    setDate(e.target.value);
-  };
 
   const handleTrainerTypeChange = e => {
     setTrainerType(e.target.value);
@@ -29,7 +43,7 @@ const BookAppointment = () => {
       setLoading(true);
 
       const response = await axios.get(
-        `/api/v1/trainer/get-availability?date=${date}&type=${trainerType}&location=${location}`
+        `/api/v1/trainer/get-availability?date=${selectedDate}&type=${trainerType}&location=${location}`
       );
 
       let appointmentLocation = response.data.location;
@@ -65,7 +79,7 @@ const BookAppointment = () => {
     try {
       await axios.post('/api/v1/user/register-appointment', {
         time,
-        date,
+        date: selectedDate,
         trainerId,
         location,
       });
@@ -82,6 +96,11 @@ const BookAppointment = () => {
     }
   };
 
+  const handleSelectedDay = day => {
+    // @TODO: convert from day to full date?
+    // @TODO give button black background
+  };
+
   return (
     <div>
       <h1>Book appointment</h1>
@@ -89,23 +108,52 @@ const BookAppointment = () => {
       {error && <p className='text-danger'>{error}</p>}
 
       <form onSubmit={getAvailableAppointments}>
-        <div>
+        <div
+          className='mb-4 w-100'
+          style={{
+            overflow: 'hidden',
+            touchAction: 'none',
+            // scrollLeft: x.to(x => `translate3d(${x}px, 0, 0)`),
+          }}
+          {...bind()}
+          id='days'
+        >
           <label htmlFor='date'>Date:</label>
-          <input
-            type='date'
-            id='date'
-            name='date'
-            value={date}
-            onChange={handleDateChange}
-            required
-          />
+
+          <div className='d-flex w-100'>
+            {Array.from({ length: daysLeft }, (_, index) => (
+              <div className='row m-0 mx-2 p-0 width-50' key={index}>
+                <div className='col-12 m-0 p-0'>
+                  <button
+                    key={index}
+                    type='button'
+                    onClick={() => handleSelectedDay(currentDay + index)}
+                    className='btn rounded-circle dayBtn text-center'
+                  >
+                    {currentDay + index}
+                  </button>
+                </div>
+                <div className='col-12 m-0 p-0'>
+                  <span className='small'>
+                    {moment(
+                      `${currentMonth} ${currentDay + index}`,
+                      'MMMM D'
+                    ).format('ddd')}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div>
-          <label htmlFor='trainerType'>Trainer Type:</label>
+          <label htmlFor='trainerType' className='mx-3'>
+            Trainer Type:{' '}
+          </label>
           <select
             id='trainerType'
             name='trainerType'
             value={trainerType}
+            className=''
             onChange={handleTrainerTypeChange}
             required
           >
@@ -120,7 +168,9 @@ const BookAppointment = () => {
           <label htmlFor='location'>Location: </label>
           <p>{location}</p>
         </div>
-        <button type='submit'>Submit</button>
+        <button type='submit' className='btn btn-success'>
+          Load
+        </button>
       </form>
       <div>
         <h2 className='my-3'>Appointment</h2>
