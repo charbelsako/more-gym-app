@@ -3,18 +3,13 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
 import useAuth from '../hooks/useAuth';
 import { useGesture } from 'react-use-gesture';
-import { useSpring, animated } from 'react-spring';
 
 const BookAppointment = () => {
-  const [{ x }, set] = useSpring(() => ({ x: 0 }));
-
   const bind = useGesture({
-    onDrag: ({ event, movement: [mx, my], delta: [dx, dy] }) => {
+    onDrag: ({ event, delta: [dx, _] }) => {
       event.preventDefault();
       const container = document.getElementById('days');
       container.scrollLeft -= dx;
-      set({ x: dx });
-      // console.log('running');
     },
   });
 
@@ -24,6 +19,7 @@ const BookAppointment = () => {
   const currentMonth = moment().format('MMMM');
   const daysInMonth = moment().daysInMonth();
   const daysLeft = daysInMonth - currentDay;
+  const [date, setDate] = useState('');
   const [selectedDate, setSelectedDate] = useState();
   const [trainerType, setTrainerType] = useState('');
 
@@ -43,7 +39,7 @@ const BookAppointment = () => {
       setLoading(true);
 
       const response = await axios.get(
-        `/api/v1/trainer/get-availability?date=${selectedDate}&type=${trainerType}&location=${location}`
+        `/api/v1/trainer/get-availability?date=${date}&type=${trainerType}&location=${location}`
       );
 
       let appointmentLocation = response.data.location;
@@ -79,7 +75,7 @@ const BookAppointment = () => {
     try {
       await axios.post('/api/v1/user/register-appointment', {
         time,
-        date: selectedDate,
+        date,
         trainerId,
         location,
       });
@@ -97,8 +93,11 @@ const BookAppointment = () => {
   };
 
   const handleSelectedDay = day => {
-    // @TODO: convert from day to full date?
-    // @TODO give button black background
+    const fullDate = moment(`${currentMonth} ${day}`, 'MMMM D').format(
+      'YYYY-MM-DD'
+    );
+    setDate(fullDate);
+    setSelectedDate(day);
   };
 
   return (
@@ -106,8 +105,9 @@ const BookAppointment = () => {
       <h1>Book appointment</h1>
       {status && <p className='text-success'>{status}</p>}
       {error && <p className='text-danger'>{error}</p>}
-
       <form onSubmit={getAvailableAppointments}>
+        <label htmlFor='date'>Date:</label>
+
         <div
           className='mb-4 w-100'
           style={{
@@ -118,19 +118,25 @@ const BookAppointment = () => {
           {...bind()}
           id='days'
         >
-          <label htmlFor='date'>Date:</label>
-
           <div className='d-flex w-100'>
             {Array.from({ length: daysLeft }, (_, index) => (
-              <div className='row m-0 mx-2 p-0 width-50' key={index}>
+              <div className='row m-0 mx-2 p-0 width-60' key={index}>
                 <div className='col-12 m-0 p-0'>
                   <button
                     key={index}
                     type='button'
                     onClick={() => handleSelectedDay(currentDay + index)}
-                    className='btn rounded-circle dayBtn text-center'
+                    className={`${
+                      selectedDate === currentDay + index
+                        ? 'bg-black text-white'
+                        : 'black'
+                    } btn rounded-circle dayBtn text-center`}
                   >
-                    {currentDay + index}
+                    {index === 0 ? (
+                      <p className='m-0 font-70'> Today</p>
+                    ) : (
+                      currentDay + index
+                    )}
                   </button>
                 </div>
                 <div className='col-12 m-0 p-0'>
@@ -166,7 +172,7 @@ const BookAppointment = () => {
         </div>
         <div>
           <label htmlFor='location'>Location: </label>
-          <p>{location}</p>
+          <span> {location}</span>
         </div>
         <button type='submit' className='btn btn-success'>
           Load
