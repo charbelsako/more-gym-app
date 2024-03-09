@@ -10,9 +10,11 @@ const Home = () => {
         <div className='col-12'>
           <h1>Home</h1>
         </div>
-        <div className='col-12 text-left'>
-          <p>Admin links</p>
-        </div>
+        {auth.role === 'admin' ? (
+          <div className='col-12 text-left'>
+            <p>Admin links</p>
+          </div>
+        ) : null}
         <ul>
           {' '}
           {auth.role === 'admin' ? (
