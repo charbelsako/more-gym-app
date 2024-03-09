@@ -8,10 +8,18 @@ body {
 }
 
 .dayBtn {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 }
 
-.width-50 {
-  width: 50px;
+.width-60 {
+  width: 60px;
+}
+
+.font-70 {
+  font-size: 70%;
+}
+
+.bg-black {
+  background-color: black;
 }
