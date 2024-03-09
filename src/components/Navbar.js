@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useLogout from '../hooks/useLogout';
 
 const Navbar = () => {
-  const { auth } = useAuth();
+  const { auth, location } = useAuth();
   const logout = useLogout();
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Navbar = () => {
                     Home
                   </Link>
                 </li>
-                {auth.role === 'customer' ? (
+                {auth.role === 'customer' && location ? (
                   <>
                     <li>
                       <Link to='/appointments/book' className='nav-link'>
@@ -63,6 +63,11 @@ const Navbar = () => {
                 <li>
                   <Link to='/profile' className='nav-link'>
                     My profile
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/choose-location' className='nav-link'>
+                    Change Location
                   </Link>
                 </li>
                 <li>
