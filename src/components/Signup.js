@@ -137,7 +137,7 @@ function SignUp() {
           />
         </div>
         <div>
-          {!validPass ? (
+          {validPass !== undefined && !validPass ? (
             <p className='text-danger'>Passwords do not match</p>
           ) : null}
           {validPass ? <p className='text-success'>Passwords match</p> : null}
