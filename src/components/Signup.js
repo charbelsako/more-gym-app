@@ -26,7 +26,8 @@ function SignUp() {
   }, [email]);
 
   useEffect(() => {
-    if (password.length > 0 && password === confirmPassword) {
+    if (password.length === 0) return;
+    if (password === confirmPassword) {
       setValidPass(true);
     } else {
       setValidPass(false);
