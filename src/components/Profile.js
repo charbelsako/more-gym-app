@@ -88,6 +88,10 @@ const Profile = () => {
                     Type: {history.membership.type.type} -{' '}
                     {history.membership.subType.numberOfSessions} sessions -{' '}
                     {history.membership.price}$
+                    <p>
+                      Start Date: {history.membershipStartDate} -- End Date:{' '}
+                      {history.membershipEndDate}
+                    </p>
                   </div>
                 </div>
               </>

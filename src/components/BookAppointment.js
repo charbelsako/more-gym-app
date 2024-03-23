@@ -153,7 +153,7 @@ const BookAppointment = () => {
         </div>
         <div>
           <label htmlFor='trainerType' className='mx-3'>
-            Trainer Type:{' '}
+            Session Type:{' '}
           </label>
           <select
             id='trainerType'
@@ -181,6 +181,7 @@ const BookAppointment = () => {
       <div>
         <h2 className='my-3'>Appointment</h2>
         {isLoading && <p>Loading...</p>}
+        {appointments.length === 0 ? 'No appointments on this date' : null}
         {appointments.map((appointment, index) => {
           const name = appointment.trainer;
           const type = appointment.type;
