@@ -44,13 +44,14 @@ const BookAppointment = () => {
 
       let appointmentLocation = response.data.location;
       let unwindedData = response.data.data.map(
-        ({ day, trainer, availableTimes, type, id }) =>
+        ({ day, trainer, availableTimes, type, id, trainerId }) =>
           Object.entries(availableTimes).map(([time, isAvailable]) => ({
             location: appointmentLocation,
             day,
             trainer,
             availableTime: time,
             isAvailable,
+            trainerId,
             type,
             id,
           }))
