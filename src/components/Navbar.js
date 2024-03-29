@@ -38,6 +38,23 @@ const Navbar = () => {
                     Home
                   </Link>
                 </li>
+                {auth.role === 'trainer' ? (
+                  <>
+                    <li>
+                      <Link to='/trainer/appointments/all' className='nav-link'>
+                        All Appointments
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to='/trainer/appointments/today'
+                        className='nav-link'
+                      >
+                        Today's Appointments
+                      </Link>
+                    </li>
+                  </>
+                ) : null}
                 {auth.role === 'customer' && location ? (
                   <>
                     <li>

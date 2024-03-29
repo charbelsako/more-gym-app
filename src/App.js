@@ -16,6 +16,9 @@ import AddMembership from './components/AddMembership';
 import UsersList from './components/UsersList';
 import MyAppointments from './components/MyAppointments';
 import ShowMemberships from './components/ShowMemberships';
+import TrainerAppointments from './components/TrainerAppointments';
+import TrainerTodayAppointments from './components/TrainerTodayAppointments';
+import TodaysAppointments from './components/TodayAppointments';
 
 function App() {
   return (
@@ -64,6 +67,22 @@ function App() {
               <Route path='/appointments/book' element={<BookAppointment />} />
               <Route path='/choose-location' element={<ChooseLocation />} />
               <Route path='/appointments/my' element={<MyAppointments />} />
+              <Route
+                path='/appointments/today'
+                element={<TodaysAppointments />}
+              />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={['trainer']} />}>
+              <Route
+                path='/trainer/appointments/all'
+                element={<TrainerAppointments />}
+              />
+              <Route
+                path='/trainer/appointments/today'
+                element={<TrainerTodayAppointments />}
+              />
+              <Route path='/choose-location' element={<ChooseLocation />} />
             </Route>
           </Route>
         </Route>
