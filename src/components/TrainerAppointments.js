@@ -1,23 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
+import useAuth from '../hooks/useAuth';
 
 const TrainerAppointments = () => {
   const [appointments, setAppointments] = useState([]);
+  const [selectedDate, setSelectedDate] = useState('');
+  const { location } = useAuth();
+
   const axios = useAxiosPrivate();
   // const [error, setError] = useState('');
   // const [status, setStatus] = useState('');
   // const currDate = moment();
+  const handleDateChange = e => {
+    setSelectedDate(e.target.value);
+  };
 
   useEffect(() => {
     const getAllAppointments = async () => {
-      const response = await axios.get('/api/v1/trainer/appointments/all');
+      const response = await axios.get(
+        '/api/v1/trainer/appointments/all?location=' + location
+      );
       setAppointments(response.data);
     };
     getAllAppointments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getDateAppointments = async e => {
+    try {
+      console.log(selectedDate);
+      const response = await axios.get(
+        '/api/v1/trainer/appointments/all?date=' +
+          selectedDate +
+          '&location=' +
+          location
+      );
+      setAppointments(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // const cancelAppointment = async id => {
   //   try {
   //     await axios.patch(`/api/v1/trainer/${id}/cancel-appointment`);
@@ -40,12 +63,31 @@ const TrainerAppointments = () => {
           <h2>My Appointments</h2>
         </div>
       </div>
+      <div className='row mb-3'>
+        <div className='col-6 mx-auto'>
+          <label htmlFor='selectedDate' className='form-label'>
+            Select Date:
+          </label>
+          <input
+            type='date'
+            id='selectedDate'
+            name='selectedDate'
+            value={selectedDate}
+            onChange={handleDateChange}
+            className='form-control'
+          />
+          <button className='btn btn-primary m-3' onClick={getDateAppointments}>
+            Load
+          </button>
+        </div>
+      </div>
       {/* <div className='row'>
         <div className='col-12'>
           {error && <p className='text-danger'>{error}</p>}
           {status && <p className='text-success'>{status}</p>}
         </div>
       </div> */}
+      {appointments.length === 0 && <h1>No appointments for this date</h1>}
       <div className='row'>
         {appointments.map(appointment => (
           <div key={appointment._id} className='col-12'>
@@ -60,6 +102,7 @@ const TrainerAppointments = () => {
                   {appointment.time > 12 ? 'pm' : 'am'}
                   <br />
                   <strong>Status:</strong> {appointment.status}
+                  <br />
                   <strong>Location: </strong> {appointment.location}
                 </p>
                 {/* <button
