@@ -68,35 +68,39 @@ const Profile = () => {
           <button onClick={updateProfile} className='btn btn-primary'>
             Update
           </button>
-          <p>
-            Membership type: {userData.membership.type.type} -{' '}
-            {userData.membership.subType.numberOfSessions} Sessions
-          </p>
-          <p>
-            Membership end date:{' '}
-            {moment(userData.membershipEndDate).format('YYYY MMMM DD')}
-          </p>
-          <p>Total Sessions taken: {userData.totalSessions || 0}</p>
-          <p>Remaining Sessions: {userData.numberOfSessions} </p>
-          <p>
-            <h3>Membership History:</h3>
-            {membershipHistory.length === 0 && <p>No data</p>}
-            {membershipHistory.map(history => (
-              <>
-                <div className='card w-50 mx-auto m-3'>
-                  <div className='card-body'>
-                    Type: {history.membership.type.type} -{' '}
-                    {history.membership.subType.numberOfSessions} sessions -{' '}
-                    {history.membership.price}$
-                    <p>
-                      Start Date: {history.membershipStartDate} -- End Date:{' '}
-                      {history.membershipEndDate}
-                    </p>
-                  </div>
-                </div>
-              </>
-            ))}
-          </p>
+          {userData.membership ? (
+            <>
+              <p>
+                Membership type: {userData.membership.type.type} -{' '}
+                {userData.membership.subType.numberOfSessions} Sessions
+              </p>
+              <p>
+                Membership end date:{' '}
+                {moment(userData.membershipEndDate).format('YYYY MMMM DD')}
+              </p>
+              <p>Total Sessions taken: {userData.totalSessions || 0}</p>
+              <p>Remaining Sessions: {userData.numberOfSessions} </p>
+              <p>
+                <h3>Membership History:</h3>
+                {membershipHistory.length === 0 && <p>No data</p>}
+                {membershipHistory.map(history => (
+                  <>
+                    <div className='card w-50 mx-auto m-3'>
+                      <div className='card-body'>
+                        Type: {history.membership.type.type} -{' '}
+                        {history.membership.subType.numberOfSessions} sessions -{' '}
+                        {history.membership.price}$
+                        <p>
+                          Start Date: {history.membershipStartDate} -- End Date:{' '}
+                          {history.membershipEndDate}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </p>
+            </>
+          ) : null}
           <p className='m-5 h4'>Role: {userData.role}</p>
           {/* Add other user profile data fields as needed */}
         </div>
