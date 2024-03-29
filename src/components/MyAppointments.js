@@ -7,7 +7,7 @@ const MyAppointments = () => {
   const axios = useAxiosPrivate();
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
-  const currDate = moment();
+  // const currDate = moment();
 
   useEffect(() => {
     const getAllAppointments = async () => {
