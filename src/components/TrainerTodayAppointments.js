@@ -60,6 +60,7 @@ const TrainerTodayAppointments = () => {
                   {appointment.time > 12 ? 'pm' : 'am'}
                   <br />
                   <strong>Status:</strong> {appointment.status}
+                  <br />
                   <strong>Location: </strong> {appointment.location}
                 </p>
                 {/* <button
