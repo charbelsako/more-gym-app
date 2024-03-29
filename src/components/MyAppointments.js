@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
+import useAuth from '../hooks/useAuth';
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -8,10 +9,13 @@ const MyAppointments = () => {
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
   // const currDate = moment();
+  const { location } = useAuth();
 
   useEffect(() => {
     const getAllAppointments = async () => {
-      const response = await axios.get('/api/v1/user/appointments/all');
+      const response = await axios.get(
+        '/api/v1/user/appointments/all?location=' + location
+      );
       setAppointments(response.data);
     };
     getAllAppointments();

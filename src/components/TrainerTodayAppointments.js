@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
+import useAuth from '../hooks/useAuth';
 
 const TrainerTodayAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const axios = useAxiosPrivate();
+  const { location } = useAuth();
   // const [error, setError] = useState('');
   // const [status, setStatus] = useState('');
   // const currDate = moment();
 
   useEffect(() => {
     const getAllAppointments = async () => {
-      const response = await axios.get('/api/v1/trainer/appointments/all');
+      const response = await axios.get(
+        '/api/v1/trainer/appointments/all?location=' + location
+      );
       setAppointments(response.data);
     };
     getAllAppointments();
