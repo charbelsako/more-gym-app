@@ -60,6 +60,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='profile' element={<Profile />} />
               <Route path='/user/reset-password' element={<ResetPassword />} />
+              <Route path='/choose-location' element={<ChooseLocation />} />
             </Route>
             <Route
               element={<RequireAuth allowedRoles={['customer', 'admin']} />}
@@ -82,7 +83,6 @@ function App() {
                 path='/trainer/appointments/today'
                 element={<TrainerTodayAppointments />}
               />
-              <Route path='/choose-location' element={<ChooseLocation />} />
             </Route>
           </Route>
         </Route>
