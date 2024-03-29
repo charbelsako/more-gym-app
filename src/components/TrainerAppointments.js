@@ -5,8 +5,8 @@ import moment from 'moment';
 const TrainerAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const axios = useAxiosPrivate();
-  const [error, setError] = useState('');
-  const [status, setStatus] = useState('');
+  // const [error, setError] = useState('');
+  // const [status, setStatus] = useState('');
   // const currDate = moment();
 
   useEffect(() => {
@@ -18,20 +18,20 @@ const TrainerAppointments = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const cancelAppointment = async id => {
-    try {
-      await axios.patch(`/api/v1/trainer/${id}/cancel-appointment`);
+  // const cancelAppointment = async id => {
+  //   try {
+  //     await axios.patch(`/api/v1/trainer/${id}/cancel-appointment`);
 
-      setError('');
-      setStatus('Successfully Cancelled appointment');
-    } catch (err) {
-      setStatus('');
-      console.log(err.response);
-      if (err.response) {
-        setError(err.response.data.message);
-      } else setError(err.message);
-    }
-  };
+  //     setError('');
+  //     setStatus('Successfully Cancelled appointment');
+  //   } catch (err) {
+  //     setStatus('');
+  //     console.log(err.response);
+  //     if (err.response) {
+  //       setError(err.response.data.message);
+  //     } else setError(err.message);
+  //   }
+  // };
 
   return (
     <div className='container mt-5'>
@@ -40,12 +40,12 @@ const TrainerAppointments = () => {
           <h2>My Appointments</h2>
         </div>
       </div>
-      <div className='row'>
+      {/* <div className='row'>
         <div className='col-12'>
           {error && <p className='text-danger'>{error}</p>}
           {status && <p className='text-success'>{status}</p>}
         </div>
-      </div>
+      </div> */}
       <div className='row'>
         {appointments.map(appointment => (
           <div key={appointment._id} className='col-12'>
@@ -61,7 +61,7 @@ const TrainerAppointments = () => {
                   <br />
                   <strong>Status:</strong> {appointment.status}
                 </p>
-                <button
+                {/* <button
                   className='btn btn-primary'
                   onClick={() => cancelAppointment(appointment._id)}
                   disabled={
@@ -75,7 +75,7 @@ const TrainerAppointments = () => {
                   }
                 >
                   Cancel Appointment
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
