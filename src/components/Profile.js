@@ -9,6 +9,8 @@ const Profile = () => {
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
   const [membershipHistory, setMembershipHistory] = useState([]);
+  const [selectedSchedule, setSelectedSchedule] = useState([]);
+  const [schedule, setSchedule] = useState([]);
 
   const axios = useAxiosPrivate();
   useEffect(() => {
@@ -18,6 +20,8 @@ const Profile = () => {
         setUserData(response.data.userData);
         setName(response.data.userData.name);
         setEmail(response.data.userData.email);
+        setSchedule(response.data.userData.schedule);
+        setSelectedSchedule(response.data.userData.schedule);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -46,6 +50,46 @@ const Profile = () => {
     } catch (err) {
       console.log(err);
       setError('An error occurred');
+      setStatus('');
+    }
+  };
+
+  const handleCheckboxChange = (location, day, time) => {
+    const updatedSchedule = schedule.map(locationData => {
+      if (locationData.location === location) {
+        // console.log(locationData, location);
+        const updatedAvailability = locationData.availability.map(dayData => {
+          // Find the day in the location's availability
+          // console.log(dayData.day, day);
+          if (dayData.day === day) {
+            // console.log('found day');
+            // Toggle the availability for the selected time
+            const updatedTimes = {
+              ...dayData.availableTimes,
+              [time]: !dayData.availableTimes[time],
+            };
+            return { ...dayData, availableTimes: updatedTimes };
+          }
+          return dayData;
+        });
+        return { ...locationData, availability: updatedAvailability };
+      }
+      return locationData;
+    });
+    console.log(updatedSchedule);
+    setSchedule(updatedSchedule);
+  };
+
+  const addAvailability = async () => {
+    try {
+      await axios.post('/api/v1/trainer/add-time', {
+        schedule,
+      });
+      setStatus('Availability added successfully');
+      setError('');
+    } catch (err) {
+      console.error(err);
+      setError('An error occurred while adding availability');
       setStatus('');
     }
   };
@@ -101,6 +145,37 @@ const Profile = () => {
               </p>
             </>
           ) : null}
+          <h3>Availability</h3>
+          <div>
+            {schedule.map(s => (
+              <div key={s}>
+                <h3>{s.location}</h3>
+                {s.availability.map(data => (
+                  <div>
+                    <h3>{data.day}</h3>
+                    {Object.keys(data.availableTimes).map(times => (
+                      <div>
+                        <label>
+                          <input
+                            type='checkbox'
+                            value={schedule}
+                            onChange={() =>
+                              handleCheckboxChange(s.location, data.day, times)
+                            }
+                            checked={data.availableTimes[times]}
+                          />{' '}
+                          {data.day} {times}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <button onClick={addAvailability} className='btn btn-primary'>
+            Add Availability
+          </button>
           <p className='m-5 h4'>Role: {userData.role}</p>
           {/* Add other user profile data fields as needed */}
         </div>
