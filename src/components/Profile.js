@@ -76,12 +76,52 @@ const Profile = () => {
       }
       return locationData;
     });
-    console.log(updatedSchedule);
     setSchedule(updatedSchedule);
+  };
+
+  const checkMultipleScheduleConflicts = schedules => {
+    const conflicts = [];
+
+    schedules.forEach((schedule, index) => {
+      schedules.forEach((otherSchedule, otherIndex) => {
+        if (index !== otherIndex) {
+          schedule.availability.forEach((day, dayIndex) => {
+            Object.entries(day.availableTimes).forEach(([time, available]) => {
+              if (
+                available &&
+                otherSchedule.availability[dayIndex].availableTimes[time]
+              ) {
+                conflicts.push({
+                  location1: schedule.location,
+                  location2: otherSchedule.location,
+                  day: day.day,
+                  time: time,
+                });
+              }
+            });
+          });
+        }
+      });
+    });
+
+    return conflicts;
   };
 
   const addAvailability = async () => {
     try {
+      const conflicts = checkMultipleScheduleConflicts(schedule);
+      console.log(conflicts);
+      if (conflicts.length > 0) {
+        console.log('Conflicts found:');
+        conflicts.forEach(conflict => {
+          console.log(
+            `Conflict between ${conflict.location1} and ${conflict.location2} on ${conflict.day} at ${conflict.time}`
+          );
+          setError('Conflicts found');
+        });
+        return;
+      }
+
       await axios.post('/api/v1/trainer/add-time', {
         schedule,
       });
@@ -147,18 +187,18 @@ const Profile = () => {
           ) : null}
           <h3>Availability</h3>
           <div>
-            {schedule.map(s => (
-              <div key={s}>
+            {schedule.map((s, index) => (
+              <div key={`${s.location}${index}`}>
                 <h3>{s.location}</h3>
-                {s.availability.map(data => (
-                  <div>
+                {s.availability.map((data, dataIndex) => (
+                  <div key={`${s.location}-${data.day}-${dataIndex}`}>
                     <h3>{data.day}</h3>
-                    {Object.keys(data.availableTimes).map(times => (
-                      <div>
+                    {Object.keys(data.availableTimes).map((times, i) => (
+                      <div key={`${times}${i}`}>
                         <label>
                           <input
                             type='checkbox'
-                            value={schedule}
+                            value={times}
                             onChange={() =>
                               handleCheckboxChange(s.location, data.day, times)
                             }
