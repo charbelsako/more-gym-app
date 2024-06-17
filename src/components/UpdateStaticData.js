@@ -92,7 +92,7 @@ const UpdateStaticData = () => {
           </button>
         </div>
         <div>
-          <h3>Cancel Time (hours)</h3>
+          <h3 className='m-2'>Cancel Time (hours)</h3>
           <input
             type='number'
             value={cancelTime}
@@ -101,7 +101,7 @@ const UpdateStaticData = () => {
           />
         </div>
         <div>
-          <h3>Class Types</h3>
+          <h3 className='m-2'>Class Types</h3>
           {classTypes.map((classType, index) => (
             <div key={index}>
               <input
