@@ -14,6 +14,7 @@ import AddSessionType from './components/AddSessionType';
 import AddPackageType from './components/AddPackageType';
 import AddMembership from './components/AddMembership';
 import UsersList from './components/UsersList';
+import TrainersList from './components/TrainersList';
 import MyAppointments from './components/MyAppointments';
 import ShowMemberships from './components/ShowMemberships';
 import TrainerAppointments from './components/TrainerAppointments';
@@ -50,6 +51,7 @@ function App() {
                 element={<AddMembership />}
               />
               <Route path='/admin/users-list' element={<UsersList />} />
+              <Route path='/admin/trainers-list' element={<TrainersList />} />
             </Route>
             <Route
               element={
