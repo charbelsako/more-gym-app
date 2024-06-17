@@ -39,6 +39,9 @@ const Home = () => {
               <li className='link'>
                 <Link to='/admin/trainers-list'>View Trainers List</Link>
               </li>
+              <li className='link'>
+                <Link to='/admin/update-static-data'>Update static data</Link>
+              </li>
             </div>
           ) : null}
         </ul>

@@ -20,6 +20,7 @@ import ShowMemberships from './components/ShowMemberships';
 import TrainerAppointments from './components/TrainerAppointments';
 import TrainerTodayAppointments from './components/TrainerTodayAppointments';
 import TodaysAppointments from './components/TodayAppointments';
+import UpdateStaticData from './components/UpdateStaticData';
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
               />
               <Route path='/admin/users-list' element={<UsersList />} />
               <Route path='/admin/trainers-list' element={<TrainersList />} />
+              <Route
+                path='/admin/update-static-data'
+                element={<UpdateStaticData />}
+              />
             </Route>
             <Route
               element={
