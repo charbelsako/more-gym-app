@@ -5,6 +5,7 @@ const UpdateStaticData = () => {
   const [locations, setLocations] = useState([]);
   const [cancelTime, setCancelTime] = useState('');
   const [classTypes, setClassTypes] = useState([]);
+  const [maxAppointments, setMaxAppointments] = useState(0);
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
@@ -19,6 +20,7 @@ const UpdateStaticData = () => {
         setLocations(data.locations);
         setCancelTime(data.cancelTime);
         setClassTypes(data.classTypes);
+        setMaxAppointments(data.maxAppointments);
       } catch (error) {
         console.error('Error fetching static data:', error);
       }
@@ -55,6 +57,7 @@ const UpdateStaticData = () => {
         locations,
         cancelTime,
         classTypes,
+        maxAppointments,
       });
       setStatus('Static data updated successfully');
       setError('');
@@ -112,6 +115,15 @@ const UpdateStaticData = () => {
               />
             </div>
           ))}
+          <div className='mb-3'>
+            <h3>Max Appointments</h3>
+            <input
+              type='number'
+              className='form-control'
+              value={maxAppointments}
+              onChange={event => setMaxAppointments(event.target.value)}
+            />
+          </div>
           <button
             type='button'
             className='btn btn-success m-2'
