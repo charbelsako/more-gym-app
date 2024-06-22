@@ -42,9 +42,11 @@ const Home = () => {
               <li className='link'>
                 <Link to='/admin/update-static-data'>Update static data</Link>
               </li>
-
               <li className='link'>
                 <Link to='/admin/membership-renewal'>Membership Renewal</Link>
+              </li>
+              <li className='link'>
+                <Link to='/admin/reset-user-password'>Reset User Password</Link>
               </li>
             </div>
           ) : null}

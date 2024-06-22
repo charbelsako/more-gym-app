@@ -22,6 +22,7 @@ import TrainerTodayAppointments from './components/TrainerTodayAppointments';
 import TodaysAppointments from './components/TodayAppointments';
 import UpdateStaticData from './components/UpdateStaticData';
 import MembershipRenewal from './components/MembershipRenewal';
+import AdminChangePassword from './components/AdminChangePassword';
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
               <Route
                 path='/admin/membership-renewal'
                 element={<MembershipRenewal />}
+              />
+              <Route
+                path='/admin/reset-user-password'
+                element={<AdminChangePassword />}
               />
             </Route>
             <Route
