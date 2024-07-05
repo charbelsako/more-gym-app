@@ -43,6 +43,11 @@ const Navbar = () => {
                     Contact
                   </Link>
                 </li>
+                <li>
+                  <Link to='/memberships' className='nav-link'>
+                    Memberships
+                  </Link>
+                </li>
                 {auth.role === 'trainer' ? (
                   <>
                     <li>

@@ -13,6 +13,8 @@ const AddMembership = () => {
   const [success, setSuccess] = useState('');
   const [memberships, setMemberships] = useState([]);
 
+  const [classTypes, setClassTypes] = useState([]);
+
   const handleSessionTypeChange = e => {
     setSelectedSessionType(e.target.value);
   };
@@ -67,6 +69,14 @@ const AddMembership = () => {
   }, [axios]);
 
   useEffect(() => {
+    const getClassTypes = async () => {
+      const response = await axios.get('/api/v1/admin/static-data');
+      setClassTypes(response.data.classTypes);
+    };
+    getClassTypes();
+  }, [axios]);
+
+  useEffect(() => {
     const getSessionTypes = async () => {
       const response = await axios.get('/api/v1/admin/get-package-subtypes');
       setSessionTypes(response.data);
@@ -102,10 +112,11 @@ const AddMembership = () => {
             <option value='' disabled>
               Select Session Type
             </option>
-            <option value='PT'>PT</option>
-            <option value='Pilates'>Pilates</option>
-            <option value='Physio'>Physio</option>
-            <option value='Boxing'>Boxing</option>
+            {classTypes.map((classType, index) => (
+              <option key={index} value={classType}>
+                {classType}
+              </option>
+            ))}
           </select>
         </div>
         <div className='mb-3'>
