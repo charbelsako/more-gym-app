@@ -38,6 +38,11 @@ const Navbar = () => {
                     Home
                   </Link>
                 </li>
+                <li>
+                  <Link to='/contact' className='nav-link'>
+                    Contact
+                  </Link>
+                </li>
                 {auth.role === 'trainer' ? (
                   <>
                     <li>

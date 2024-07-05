@@ -23,6 +23,7 @@ import TodaysAppointments from './components/TodayAppointments';
 import UpdateStaticData from './components/UpdateStaticData';
 import MembershipRenewal from './components/MembershipRenewal';
 import AdminChangePassword from './components/AdminChangePassword';
+import ContactUs from './components/Contact';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/memberships' element={<ShowMemberships />} />
+          <Route path='/contact' element={<ContactUs />} />
           {/* Routes open to all */}
           {/* <Route
             element={
