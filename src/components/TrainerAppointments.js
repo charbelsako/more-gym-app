@@ -94,6 +94,7 @@ const TrainerAppointments = () => {
             <div className='card m-2'>
               <div className='card-body'>
                 <h5 className='card-title'>{appointment.trainer}</h5>
+                <h2>Customer: {appointment.userId.name}</h2>
                 <p className='card-text'>
                   <strong>Day:</strong>{' '}
                   {moment(appointment.date).format('YYYY MMMM DD')}
