@@ -21,6 +21,9 @@ function SignUp() {
   const [status, setStatus] = useState();
   const [error, setError] = useState('');
 
+  const [birthday, setBirthday] = useState('');
+  const [gender, setGender] = useState('');
+
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
@@ -58,6 +61,8 @@ function SignUp() {
       setEmail('');
       setPassword('');
       setConfirmPassword('');
+      setBirthday('');
+      setGender('');
       setError('');
     } catch (registerUserError) {
       setStatus('');
@@ -170,6 +175,41 @@ function SignUp() {
             onChange={e => setUsername(e.target.value)}
             value={username}
           />
+        </div>
+
+        <div>
+          <label htmlFor='birthday'>Birthday:</label>
+        </div>
+        <div className='mb-3'>
+          <TextFieldGroup
+            className='form-control'
+            placeholder='Enter your birthday'
+            type='date'
+            id='birthday'
+            name='birthday'
+            onChange={e => setBirthday(e.target.value)}
+            value={birthday}
+          />
+        </div>
+
+        <div>
+          <label htmlFor='gender'>Gender:</label>
+        </div>
+        <div className='mb-3'>
+          <select
+            className='form-control'
+            id='gender'
+            name='gender'
+            onChange={e => setGender(e.target.value)}
+            value={gender}
+          >
+            <option value='' disabled>
+              Select your gender
+            </option>
+            <option value='male'>Male</option>
+            <option value='female'>Female</option>
+            <option value='other'>Other</option>
+          </select>
         </div>
 
         <hr />
