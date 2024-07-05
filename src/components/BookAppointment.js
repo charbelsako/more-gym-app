@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import moment from 'moment';
 import useAuth from '../hooks/useAuth';
@@ -25,9 +25,19 @@ const BookAppointment = () => {
 
   const [appointments, setAppointments] = useState([]);
 
+  const [classTypes, setClassTypes] = useState([]);
+
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getClassTypes = async () => {
+      const response = await axios.get('/api/v1/admin/static-data');
+      setClassTypes(response.data.classTypes);
+    };
+    getClassTypes();
+  }, [axios]);
 
   const handleTrainerTypeChange = e => {
     setTrainerType(e.target.value);
@@ -165,10 +175,11 @@ const BookAppointment = () => {
             required
           >
             <option value=''>Select Trainer Type</option>
-            <option value='Boxing'>Boxing</option>
-            <option value='PT'>PT</option>
-            <option value='Physio'>Physio</option>
-            <option value='Pilates'>Pilates</option>
+            {classTypes.map((classType, index) => (
+              <option key={index} value={classType}>
+                {classType}
+              </option>
+            ))}
           </select>
         </div>
         <div>
