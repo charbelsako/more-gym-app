@@ -7,7 +7,7 @@ function ContactUs() {
       <h1 className='text-center mb-4'>Contact Us</h1>
 
       <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-12'>
           <h2>Get in Touch</h2>
           <p>If you have any questions, feel free to reach out to us:</p>
           <p>
@@ -19,7 +19,7 @@ function ContactUs() {
           </p> */}
         </div>
 
-        <div className='col-md-6'>
+        <div className='col-md-12'>
           <h2>Follow Us on Instagram</h2>
           <div className=''>
             <a
@@ -31,6 +31,16 @@ function ContactUs() {
               <SocialIcon url={'https://instagram.com/charbel.m.sarkis'} />
             </a>
           </div>
+        </div>
+
+        <div className='col-md-12'>
+          <h2>Opening Hours</h2>
+          <p>
+            <strong>Friday </strong>6:00 am till 10:00 pm
+          </p>
+          <p>
+            <strong>Saturday </strong>8:00 am till 3:00 pm
+          </p>
         </div>
       </div>
     </div>
