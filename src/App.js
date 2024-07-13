@@ -24,6 +24,7 @@ import UpdateStaticData from './components/UpdateStaticData';
 import MembershipRenewal from './components/MembershipRenewal';
 import AdminChangePassword from './components/AdminChangePassword';
 import ContactUs from './components/Contact';
+import SalesReport from './components/SalesReport';
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
                 path='/admin/reset-user-password'
                 element={<AdminChangePassword />}
               />
+              <Route path='/admin/sales-report' element={<SalesReport />} />
             </Route>
             <Route
               element={
