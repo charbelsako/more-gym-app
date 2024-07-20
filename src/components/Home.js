@@ -48,6 +48,9 @@ const Home = () => {
               <li className='link'>
                 <Link to='/admin/reset-user-password'>Reset User Password</Link>
               </li>
+              <li className='link'>
+                <Link to='/admin/register-trainer'>Register Trainer</Link>
+              </li>
             </div>
           ) : null}
         </ul>

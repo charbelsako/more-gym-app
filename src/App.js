@@ -25,6 +25,7 @@ import MembershipRenewal from './components/MembershipRenewal';
 import AdminChangePassword from './components/AdminChangePassword';
 import ContactUs from './components/Contact';
 import SalesReport from './components/SalesReport';
+import TrainerRegistration from './components/TrainerRegistration';
 
 function App() {
   return (
@@ -44,6 +45,10 @@ function App() {
           ></Route> */}
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth allowedRoles={['admin']} />}>
+              <Route
+                path='/admin/register-trainer'
+                element={<TrainerRegistration />}
+              />
               <Route
                 path='/admin/create-session-type'
                 element={<AddSessionType />}
