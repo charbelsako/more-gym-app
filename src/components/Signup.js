@@ -55,6 +55,8 @@ function SignUp() {
         password,
         name,
         username,
+        gender,
+        birthday,
       });
 
       setStatus('Successfully created your account');
