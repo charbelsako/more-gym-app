@@ -10,7 +10,7 @@ const Navbar = () => {
 
   const signOut = async () => {
     await logout();
-    navigate('/login');
+    navigate('/');
   };
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
