@@ -48,7 +48,7 @@ const Login = () => {
         if (err.response.data.errors) {
           setErrors(err.response.data.errors);
         } else {
-          if (setError(err.response.data.message)) {
+          if (err.response.data.message) {
             setError(err.response.data.message);
           } else {
             setError(err.response.data);
