@@ -17,7 +17,7 @@ const LocationPage = () => {
 
   const handleSaveLocation = () => {
     setLocation(selectedLocation);
-    navigate('/', { replace: true });
+    navigate('/home', { replace: true });
   };
 
   useEffect(() => {

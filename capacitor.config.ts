@@ -5,8 +5,24 @@ const config: CapacitorConfig = {
   appName: 'gym-app',
   webDir: 'build',
   server: {
-    androidScheme: 'https'
-  }
+    // hostname: 'localhost',
+    allowNavigation: [
+      'http://localhost:5000',
+      'localhost:5000/',
+      'localhost:5000',
+      'http://localhost:5000/',
+      'http://192.168.43.108:5000',
+      'http://10.0.2.2:5000',
+    ],
+    androidScheme: 'http',
+    // url: 'http://192.168.43.108:3000',
+    cleartext: true,
+  },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+  },
 };
 
 export default config;

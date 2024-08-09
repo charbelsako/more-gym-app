@@ -22,6 +22,7 @@ const Login = () => {
 
   const onSubmit = async e => {
     try {
+      console.log('logging in');
       e.preventDefault();
 
       const data = {
@@ -32,6 +33,10 @@ const Login = () => {
       const response = await axios.post('/api/v1/auth/login', data, {
         withCredentials: true,
       });
+
+      console.log('this is the response');
+      console.log(response);
+
       setAuth({
         email: response.data.data.email,
         role: response.data.data.role,
@@ -39,11 +44,12 @@ const Login = () => {
       });
       navigate('/choose-location', { replace: true });
     } catch (err) {
-      console.log(err);
-      if (err.response.data.errors) {
-        setErrors(err.response.data.errors);
-      } else {
-        setError(err.response.data);
+      if (err.response) {
+        if (err.response.data.errors) {
+          setErrors(err.response.data.errors);
+        } else {
+          setError(err.response.data.message);
+        }
       }
     }
   };

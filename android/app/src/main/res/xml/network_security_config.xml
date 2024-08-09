@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">http://localhost:5000</domain>
+        <domain includeSubdomains="true">localhost:5000</domain>
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">http://localhost</domain>
+        <domain includeSubdomains="true">http://localhost:8080</domain>
+        <domain includeSubdomains="true">http://localhost:8000</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">192.236.178.57</domain>
+        <!--            <domain android:includeSubdomains="true">anotherdomain.com</domain>-->
+    </domain-config>
+</network-security-config>

@@ -33,7 +33,7 @@ function App() {
       <Routes>
         {/* Protected route */}
         <Route path='/' element={<Layout />}>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/memberships' element={<ShowMemberships />} />
           <Route path='/contact' element={<ContactUs />} />
@@ -83,7 +83,7 @@ function App() {
               }
             >
               {/* This will be the dashboard of all roles */}
-              <Route path='/' element={<Home />} />
+              <Route path='/home' element={<Home />} />
               <Route path='profile' element={<Profile />} />
               <Route path='/user/reset-password' element={<ResetPassword />} />
               <Route path='/choose-location' element={<ChooseLocation />} />

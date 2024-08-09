@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <div className='container'>
-        <Link to='/' className='navbar-brand'>
+        <Link to='/home' className='navbar-brand'>
           MORE gym
         </Link>
         <button
@@ -34,7 +34,7 @@ const Navbar = () => {
             {auth.email && (
               <>
                 <li>
-                  <Link to='/' className='nav-link'>
+                  <Link to='/home' className='nav-link'>
                     Home
                   </Link>
                 </li>
