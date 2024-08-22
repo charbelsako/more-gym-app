@@ -24,8 +24,8 @@ const config: CapacitorConfig = {
     },
   },
   ios: {
-    contentInset: "always"
-  }
+    contentInset: 'always',
+  },
 };
 
 export default config;
