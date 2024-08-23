@@ -53,6 +53,7 @@ const BookAppointment = () => {
       );
 
       let appointmentLocation = response.data.location;
+
       let unwindedData = response.data.data.map(
         ({ day, trainer, availableTimes, type, id, trainerId }) =>
           Object.entries(availableTimes).map(([time, isAvailable]) => ({
@@ -67,6 +68,7 @@ const BookAppointment = () => {
           }))
       );
       let availability = [];
+
       // eslint-disable-next-line no-unused-vars
       unwindedData = unwindedData.map(el => availability.push(...el));
       availability.sort((a, b) => a.availableTime - b.availableTime);
